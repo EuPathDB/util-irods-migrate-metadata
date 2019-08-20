@@ -1,0 +1,43 @@
+= iRODS Dataset Metadata to AVU Migrator
+
+A script to copy a trimmed down version of each user dataset's `dataset.json`
+and `meta.json` files into the iRODS AVU store to enable iCAT query lookups of
+user dataset details.
+
+== Build
+
+A runnable jar can be constructed using the following command:
+
+[source, bash]
+----
+./gradlew fatJar
+----
+
+The output jar will be placed in the `build/libs` directory.
+
+== Configuration
+
+Configurable using the following environment variables:
+
+[source, bash]
+----
+IRODS_USERNAME
+IRODS_PASSWORD
+IRODS_HOST
+IRODS_PORT
+IRODS_ZONE
+IRODS_RESOURCE
+----
+
+== Usage
+
+[source, bash]
+----
+env IRODS_USERNAME="some-user" \
+    IRODS_PASSWORD="some-password" \
+    IRODS_HOST="some-host-name" \
+    IRODS_PORT=1234 \
+    IRODS_RESOURCE="some-resource" \
+    IRODS_ZONE="some-zone" \
+  java -jar build/libs/irods-meta-copy-1.0.0.jar
+----

@@ -1,0 +1,36 @@
+plugins {
+  id 'java'
+}
+
+group 'org.eupathdb.util'
+version '1.0.0'
+
+sourceCompatibility = 11
+
+repositories {
+  mavenCentral()
+  maven { url = 'https://raw.github.com/DICE-UNC/DICE-Maven/master/releases' }
+}
+
+dependencies {
+  implementation(
+    [ group:   'org.irods.jargon',
+      name:    'jargon-core',
+      version: '4.2.2.1-RELEASE' ],
+    [ group:   'org.json',
+      name:    'json',
+      version: '20190722' ],
+  )
+}
+
+task fatJar(type: Jar) {
+  manifest { attributes('Main-Class': "org.eupathdb.util.irods.meta.CopyMeta") }
+
+
+  from sourceSets.main.output
+  from (configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }) {
+      exclude "META-INF/*.SF"
+      exclude "META-INF/*.DSA"
+      exclude "META-INF/*.RSA"
+    }
+}
